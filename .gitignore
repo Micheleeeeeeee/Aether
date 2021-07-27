@@ -1,0 +1,14 @@
+.env
+*.zip
+*.dmg
+*.xip
+*.tar
+*.xz
+*.xml
+*.docx
+*.msi
+node_modules
+node_modules
+node_modules
+node_modules
+node_modules
