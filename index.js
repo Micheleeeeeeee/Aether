@@ -1,54 +1,16 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const fs = require('fs');
-const static = require('node-static')
-const http = require('http')
-const crypto = require('crypto');
-dotenv.config();
+const express = require('express'); // Express.js API
+const dotenv = require('dotenv'); // Grab information from .env file 
+const static = require('node-static') // idfk??
+const crypto = require('crypto'); // Generate 64-byte keys
+dotenv.config(); // idk
 
-const server = express();
+const server = express(); // *server* owo
 
-const privateKey = process.env.PRIVATE_KEY;
-const port = process.env.PORT;
+const privateKey = process.env.PRIVATE_KEY; // Private key from .env
+const port = process.env.PORT; // Port from .env
 
-server.get('/', (request, response) => {
-    response.status(200).json({
-        "failed": false,
-        "message": "This works!",
-        "exitCode": 0
-    })
-})
-
-server.get('/private/404test', (request, response) => {
-    // const file = new(static.Server)(__dirname + "/errors/404.html")
-    return response.sendFile(__dirname + "/errors/404.html");
-})
-
-server.get('/private/generatekey', (request, response) => {
-
-    if (!request.query.key)
-        return response.status(403).json({
-            "failed": true,
-            "message": "You are not allowed to generate a key."
-        })
-
-    if (!request.query.key == privateKey)
-        return response.status(403).json({
-            "failed": true,
-            "message": "You are not allowed to generate a key."
-        })
-
-    return response.json({
-        "failed": false,
-        "message": crypto.randomBytes(64).toString('hex')
-    })
-})
-
-server.get('*', (request, response) => {
-    return response
-            .status(404)
-            .sendFile(__dirname + "/errors/404.html")
-})
+const GetRoot = require('./Routes/GET');
+server.use('/', GetRoot);
 
 server.listen(port);
 console.log("Listening on port: " + port);
