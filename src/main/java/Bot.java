@@ -18,7 +18,7 @@ public class Bot {
 
         scanner = new Scanner(System.in);
         System.out.println("Bot Token: ");
-        token = scanner.nextLine();
+        token = scanner.next();
 
         JDA jda = JDABuilder.createDefault(token)
                 .addEventListeners(new Test())
